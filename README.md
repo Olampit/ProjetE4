@@ -1,3 +1,79 @@
+This whole project is a project based on the TempestSDR Project by Martin Marinov. 
+The objective is to implement a plugin that enables the user, under Linux, to use a limeSDR mini v2.4 to receive data (instead of, say, a Hackrf). 
+It has been successfully done. 
+
+Detailed information about what has been done can be found here : https://docs.google.com/document/d/1vfhPrypcEWKFICrKEZNudLb5t-lYXXHZ6QQSSGXuHYQ/
+
+Steps to install TempestSDR and get it working properly: 
+1- install the default jdk : 
+sudo apt install default-jdk
+
+2- install limesuite : 
+sudo apt remove --purge limesuite*
+git clone https://github.com/myriadrf/LimeSuite.git
+cd LimeSuite
+mkdir build && cd build
+cmake ..
+make -j$(nproc)
+sudo make install
+sudo ldconfig
+
+echo 'export PATH=$HOME/LimeSuite/build:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+
+You can then test this step using 
+LimeUtil - - info 
+and 
+LimeUtil - - find
+
+which should give you the name and serial number of your card. 
+
+3 - install soapySDR
+git clone https://github.com/pothosware/SoapySDR.git
+cd SoapySDR
+mkdir build && cd build
+cmake ..
+make -j$(nproc)
+sudo make install
+sudo ldconfig
+
+4 - install soapySDR drivers for the lime card : 
+cd ~
+git clone https://github.com/myriadrf/SoapyLMS7.git
+cd SoapyLMS7
+mkdir build && cd build
+cmake ..
+make -j$(nproc)
+sudo make install
+sudo ldconfig
+
+5 - install the TempestSDR project from https://github.com/Olampit/ProjetE4
+
+6 - Make all the files needed :  (starting from above JavaGUI and the plugins). 
+there, you can 
+make all
+cd JavaGUI
+make plugins
+make jar
+make all
+
+7 - launch TempestSDR : 
+in the folder where you created the JTempestSDR.jar (default : JavaGUI)
+java -jar JTempestSDR.jar
+
+8 - top left corner, in the ‘file’ menu : 
+Choose Load LimeSDRMini (live)
+You can choose the frequency and the sample_rate. 
+We advise 284 MHz for the frequency and 8 MHz for the sample_rate.
+
+You can then use TempestSDR as you would normally (Start, set the gain, etc)
+
+
+
+
+
+
 TempestSDR
 =============
 
