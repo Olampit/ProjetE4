@@ -4,6 +4,7 @@ It has been successfully done.
 
 Detailed information about what has been done can be found here : https://docs.google.com/document/d/1vfhPrypcEWKFICrKEZNudLb5t-lYXXHZ6QQSSGXuHYQ/
 
+
 Steps to install TempestSDR and get it working properly: 
 1- install the default jdk : 
 sudo apt install default-jdk
@@ -50,7 +51,20 @@ sudo ldconfig
 
 5 - install the TempestSDR project from https://github.com/Olampit/ProjetE4
 
-6 - Make all the files needed :  (starting from above JavaGUI and the plugins). 
+6 - create the udev ruleset to allow you to write on the LimeSDR
+sudo nano /etc/udev/rules.d/64-limesdr.rules
+
+Copy 
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="601f", MODE="0666", GROUP="plugdev"
+inside
+
+save and reload the udev : 
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+
+
+7 - Make all the files needed :  (starting from above JavaGUI and the plugins). 
 there, you can 
 make all
 cd JavaGUI
@@ -58,21 +72,16 @@ make plugins
 make jar
 make all
 
-7 - launch TempestSDR : 
+8 - launch TempestSDR : 
 in the folder where you created the JTempestSDR.jar (default : JavaGUI)
 java -jar JTempestSDR.jar
 
-8 - top left corner, in the ‘file’ menu : 
+9 - top left corner, in the ‘file’ menu : 
 Choose Load LimeSDRMini (live)
 You can choose the frequency and the sample_rate. 
 We advise 284 MHz for the frequency and 8 MHz for the sample_rate.
 
 You can then use TempestSDR as you would normally (Start, set the gain, etc)
-
-
-
-
-
 
 TempestSDR
 =============
