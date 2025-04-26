@@ -26,13 +26,12 @@ static lms_stream_t stream;
 static int streaming = 0;
 static float *float_buffer = NULL;
 
-// Valeurs configurables
+// Valeurs configurables (en Hertz)
 static uint32_t current_samplerate = 8000000;
-static uint32_t current_frequency = 284000000; // par défaut 100 MHz  
+static uint32_t current_frequency = 284000000;  
 static char last_error[256] = "";
 
 int TSDRPLUGIN_API __stdcall tsdrplugin_init(const char * params) {
-    // Lecture des paramètres : "frequency samplerate"
     if (params != NULL) {
         sscanf(params, "%u %u", &current_frequency, &current_samplerate);
     }
